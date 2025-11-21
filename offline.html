@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Systems for Success</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #FFF9F5 0%, #FFE8D6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .offline-icon {
+            font-size: 120px;
+            margin-bottom: 24px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #2D2D2D;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #F77536, #FF9F68);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 16px rgba(247, 117, 54, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(247, 117, 54, 0.4);
+        }
+
+        .info {
+            margin-top: 40px;
+            padding: 20px;
+            background: #FFF9F5;
+            border-radius: 12px;
+            border-left: 4px solid #F77536;
+        }
+
+        .info h3 {
+            font-size: 18px;
+            color: #2D2D2D;
+            margin-bottom: 12px;
+        }
+
+        .info ul {
+            text-align: left;
+            margin-left: 20px;
+            color: #666666;
+            line-height: 1.8;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #FFE8D6;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #F77536;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        <div class="status">🔴 Offline Mode</div>
+        <h1>You're Offline</h1>
+        <p>
+            Don't worry! Your data is safe and stored locally.
+            Reconnect to the internet to sync and access all features.
+        </p>
+        <button class="btn" onclick="window.location.reload()">
+            🔄 Try Again
+        </button>
+
+        <div class="info">
+            <h3>💡 What You Can Still Do:</h3>
+            <ul>
+                <li>Your data is saved locally on this device</li>
+                <li>All completed tasks and systems are preserved</li>
+                <li>The app will work once you're back online</li>
+                <li>No data will be lost</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check online status periodically
+        setInterval(() => {
+            if (navigator.onLine) {
+                window.location.reload();
+            }
+        }, 3000);
+
+        // Listen for online event
+        window.addEventListener('online', () => {
+            window.location.reload();
+        });
+    </script>
+</body>
+
+</html>

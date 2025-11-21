@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+
+    <!-- PWA Primary Meta Tags -->
+    <title>Systems for Success - Build Better Habits</title>
+    <meta name="title" content="Systems for Success - Build Better Habits">
+    <meta name="description"
+        content="Transform your goals into repeatable systems with our Headspace-inspired productivity app. Track habits, earn achievements, and build consistency.">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#F77536">
+    <meta name="msapplication-TileColor" content="#F77536">
+    <meta name="msapplication-navbutton-color" content="#F77536">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="72x72" href="icons/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="icons/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128x128.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="384x384" href="icons/icon-384x384.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512x512.png">
+
+    <!-- Apple Web App Configuration -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Systems">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="header__title">
+                <span class="header__logo" aria-hidden="true">🎯</span>
+                Systems for Success
+            </h1>
+            <div class="header__controls">
+                <div class="header__points">
+                    <span>⭐</span>
+                    <span id="userPoints">0</span>
+                </div>
+                <button class="btn btn--icon" data-action="theme" aria-label="Toggle dark mode">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <button class="btn btn--icon" data-action="guide" aria-label="Open user guide">
+                    ❓
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs" role="tablist">
+            <button class="nav-tab active" data-tab="overview" role="tab" aria-selected="true">📊 Overview</button>
+            <button class="nav-tab" data-tab="systems" role="tab" aria-selected="false">⚙️ My Systems</button>
+            <button class="nav-tab" data-tab="daily" role="tab" aria-selected="false">✅ Today</button>
+            <button class="nav-tab" data-tab="analytics" role="tab" aria-selected="false">📈 Analytics</button>
+            <button class="nav-tab" data-tab="achievements" role="tab" aria-selected="false">🏆 Achievements</button>
+            <button class="nav-tab" data-tab="principles" role="tab" aria-selected="false">💡 Principles</button>
+        </nav>
+
+        <!-- Overview Section -->
+        <section class="section active" id="overview-section" role="tabpanel">
+            <div class="card">
+                <h2 style="font-size: 32px; margin-bottom: 16px; color: var(--color-text-primary);">
+                    Welcome back! Ready to build success? 🌟
+                </h2>
+                <p style="font-size: 18px; color: var(--color-text-secondary); margin-bottom: 24px; line-height: 1.8;">
+                    Success isn't about discipline—it's about building systems that work for you.
+                    Transform your goals into repeatable processes and watch your progress compound.
+                </p>
+                <button class="btn btn--blue" onclick="switchTab('systems')">
+                    🚀 Create Your First System
+                </button>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value" id="totalSystems">0</span>
+                    <span class="stat-label">Active Systems</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="todayTasks">0</span>
+                    <span class="stat-label">Tasks Today</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="completionRate">0%</span>
+                    <span class="stat-label">Completion Rate</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="streakDays">0</span>
+                    <span class="stat-label">Day Streak 🔥</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Systems Section -->
+        <section class="section" id="systems-section" role="tabpanel">
+            <div class="card">
+                <div class="card__header">
+                    <h2 class="card__title">⚙️ Your Systems</h2>
+                    <button class="btn btn--success" data-action="new-system">
+                        + New System
+                    </button>
+                </div>
+            </div>
+
+            <div id="systemsList">
+                <!-- Systems will be rendered here -->
+            </div>
+
+            <div id="systemsEmptyState" class="empty-state">
+                <div class="empty-state__icon">📋</div>
+                <h3 class="empty-state__title">No systems yet</h3>
+                <p class="empty-state__text">
+                    Create your first system to start building consistent habits and processes.
+                </p>
+                <button class="btn" data-action="new-system">
+                    🚀 Create System
+                </button>
+            </div>
+        </section>
+
+        <!-- Daily Section -->
+        <section class="section" id="daily-section" role="tabpanel">
+            <div class="card">
+                <h2 style="font-size: 24px; margin-bottom: 16px;">Today's Tasks ✅</h2>
+                <div class="progress-container">
+                    <div class="progress-bar" id="dailyProgress" style="width: 0%" role="progressbar" aria-valuenow="0"
+                        aria-valuemin="0" aria-valuemax="100">
+                        0%
+                    </div>
+                </div>
+            </div>
+
+            <div id="dailyTasksList">
+                <!-- Today's tasks will be rendered here -->
+            </div>
+
+            <div id="dailyEmptyState" class="empty-state">
+                <div class="empty-state__icon">🎉</div>
+                <h3 class="empty-state__title">No tasks for today</h3>
+                <p class="empty-state__text">
+                    Create a system first, then come back here to see your daily tasks.
+                </p>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section class="section" id="analytics-section" role="tabpanel">
+            <div class="card">
+                <h2 class="card__title">📈 Your Progress</h2>
+                <p style="color: var(--color-text-secondary); margin-top: 8px;">
+                    Track your compounding progress over time
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 16px; font-size: 20px;">🔥 7-Day Streak</h3>
+                <div class="streak-container">
+                    <div id="streak0" class="streak-day">·</div>
+                    <div id="streak1" class="streak-day">·</div>
+                    <div id="streak2" class="streak-day">·</div>
+                    <div id="streak3" class="streak-day">·</div>
+                    <div id="streak4" class="streak-day">·</div>
+                    <div id="streak5" class="streak-day">·</div>
+                    <div id="streak6" class="streak-day">·</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 16px; font-size: 20px;">📊 Completion Stats</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                        <div style="font-size: 40px; font-weight: 700; color: var(--color-success);"
+                            id="totalCompleted">0</div>
+                        <div style="color: var(--color-text-secondary);">Tasks Completed</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 40px; font-weight: 700; color: var(--color-primary-orange);"
+                            id="avgCompletionRate">0%</div>
+                        <div style="color: var(--color-text-secondary);">Avg Completion</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Management -->
+            <div class="card">
+                <h3 style="margin-bottom: 16px; font-size: 20px;">💾 Data Management</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: 16px;">
+                    Your data is automatically saved to your browser's IndexedDB. You can also export and import your
+                    data as JSON files.
+                </p>
+                <div class="data-controls">
+                    <button class="btn btn--blue" data-action="export-data">
+                        📥 Export Data
+                    </button>
+                    <button class="btn btn--pink" data-action="import-data">
+                        📤 Import Data
+                    </button>
+                    <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="section" id="achievements-section" role="tabpanel">
+            <div class="card">
+                <h2 class="card__title">🏆 Your Achievements</h2>
+                <p style="color: var(--color-text-secondary); margin-top: 8px;">
+                    Unlock badges as you build consistent systems and complete tasks
+                </p>
+            </div>
+
+            <div class="badge-container" id="badgesList">
+                <!-- Badges will be rendered here -->
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 16px; font-size: 20px;">🎮 How to Earn Points</h3>
+                <ul style="margin-left: 20px; color: var(--color-text-secondary); line-height: 2;">
+                    <li><strong>+50 points</strong> - Create a new system</li>
+                    <li><strong>+10 points</strong> - Complete a task</li>
+                    <li><strong>+25 points</strong> - Maintain your daily streak</li>
+                    <li><strong>+100 points</strong> - Unlock an achievement</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Principles Section -->
+        <section class="section" id="principles-section" role="tabpanel">
+            <div class="card">
+                <h2 style="font-size: 28px; margin-bottom: 16px;">💡 The 5 Principles of Systems Thinking</h2>
+                <p style="color: var(--color-text-secondary); margin-bottom: 24px; line-height: 1.8;">
+                    Based on the framework: Success becomes predictable when you build the right systems.
+                </p>
+            </div>
+
+            <ul class="principles-list">
+                <li class="principle-item">
+                    <div class="principle-number">1</div>
+                    <h3 class="principle-title">🔒 Trap Yourself</h3>
+                    <p class="principle-desc">
+                        Create forcing functions that eliminate escape routes. When retreat isn't an option,
+                        you find ways to make it work. Use public commitments, financial stakes, and hard deadlines.
+                    </p>
+                </li>
+
+                <li class="principle-item">
+                    <div class="principle-number">2</div>
+                    <h3 class="principle-title">⚡ Manage Your Willpower</h3>
+                    <p class="principle-desc">
+                        Willpower is a finite resource that depletes throughout the day. Don't fight biology—
+                        design your environment so the right choices require less willpower.
+                    </p>
+                </li>
+
+                <li class="principle-item">
+                    <div class="principle-number">3</div>
+                    <h3 class="principle-title">🧠 Think in Mental Algorithms</h3>
+                    <p class="principle-desc">
+                        Use "if-then" plans to automate decisions. If it's Monday at 7am, then I'm at the gym.
+                        These mental algorithms remove emotion and debate from the equation.
+                    </p>
+                </li>
+
+                <li class="principle-item">
+                    <div class="principle-number">4</div>
+                    <h3 class="principle-title">📋 Outsource Your Decisions</h3>
+                    <p class="principle-desc">
+                        Checklists aren't for beginners—they're for experts who don't want to rely on memory under
+                        pressure. Build systems that make the hard work automatic.
+                    </p>
+                </li>
+
+                <li class="principle-item">
+                    <div class="principle-number">5</div>
+                    <h3 class="principle-title">🔄 Become the System</h3>
+                    <p class="principle-desc">
+                        Through repetition, your nervous system adapts. You don't need motivation anymore—
+                        your biology starts craving the pattern itself. That's when success becomes effortless.
+                    </p>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- New System Modal -->
+    <div class="modal" id="newSystemModal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title" id="modalTitle">Create New System ⚙️</h2>
+                <button class="modal__close" data-action="close-modal" aria-label="Close modal">&times;</button>
+            </div>
+            <form id="newSystemForm">
+                <div class="form-group">
+                    <label class="form-label" for="systemTitle">System Title</label>
+                    <input type="text" id="systemTitle" class="form-input" placeholder="e.g., Daily Productivity System"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="systemGoal">What's your goal?</label>
+                    <textarea id="systemGoal" class="form-input" placeholder="Describe what you want to achieve..."
+                        required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="systemFrequency">Frequency</label>
+                    <select id="systemFrequency" class="form-select" required>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tasks (one per line)</label>
+                    <textarea id="systemTasks" class="form-input"
+                        placeholder="Deep work block&#10;Quick win task&#10;Learning session" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">
+                    Create System 🚀
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Guide Modal -->
+    <div class="modal" id="guideModal" role="dialog" aria-labelledby="guideTitle" aria-modal="true">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title" id="guideTitle">How to Use This App 📖</h2>
+                <button class="modal__close" data-action="close-modal" aria-label="Close guide">&times;</button>
+            </div>
+            <div style="line-height: 1.8; color: var(--color-text-secondary);">
+                <h3 style="margin-top: 16px; margin-bottom: 8px; color: var(--color-text-primary);">Getting Started</h3>
+                <ol style="margin-left: 20px;">
+                    <li><strong>Create a System:</strong> Click "New System" and define your repeatable process</li>
+                    <li><strong>Add Tasks:</strong> Break down your system into specific, actionable tasks</li>
+                    <li><strong>Execute Daily:</strong> Check off tasks in the "Today" tab as you complete them</li>
+                    <li><strong>Track Progress:</strong> Watch your completion rate and streaks grow in Analytics</li>
+                    <li><strong>Earn Rewards:</strong> Complete tasks and unlock achievements to gain points</li>
+                </ol>
+
+                <h3 style="margin-top: 24px; margin-bottom: 12px; color: var(--color-text-primary);">📺 Learn More</h3>
+                <div
+                    style="background: linear-gradient(135deg, #FF5FA0 0%, #F77536 100%); padding: 20px; border-radius: 16px; text-align: center; margin-bottom: 16px;">
+                    <p style="color: white; font-size: 16px; margin-bottom: 12px; font-weight: 600;">
+                        🎥 Watch the original tutorial that inspired this app!
+                    </p>
+                    <a href="https://www.youtube.com/watch?v=p3F-1QyvHnY" target="_blank" rel="noopener noreferrer"
+                        style="display: inline-block; background: white; color: #F77536; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);"
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0, 0, 0, 0.3)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.2)';">
+                        ▶️ Watch on YouTube
+                    </a>
+                </div>
+
+                <h3 style="margin-top: 24px; margin-bottom: 8px; color: var(--color-text-primary);">The Philosophy</h3>
+                <p>
+                    This app is built on the principle that <strong>systems beat goals</strong>. Instead of relying on
+                    motivation, you build repeatable processes that compound over time. Small, consistent actions lead
+                    to
+                    remarkable results.
+                </p>
+
+                <h3 style="margin-top: 24px; margin-bottom: 8px; color: var(--color-text-primary);">🔒 Privacy &
+                    Data Storage</h3>
+                <p
+                    style="background: var(--color-bg-secondary); padding: 16px; border-radius: 12px; border-left: 4px solid var(--color-primary);">
+                    <strong>100% Local Storage - No Cloud, No Servers:</strong><br>
+                    All your data is stored <strong>exclusively on YOUR device</strong> using IndexedDB, a browser-based
+                    database.
+                    <strong>Nothing is ever sent to any server</strong> - we don't even have one!
+                    Your habits, systems, and progress are completely private and never leave your device.
+                    <br><br>
+                    <strong>Manual Data Transfer:</strong><br>
+                    You can export your data as JSON and import it on another device. This is the ONLY way to move data
+                    between devices -
+                    there is no automatic cloud sync (by design, for your privacy).
+                </p>
+
+                <h3 style="margin-top: 24px; margin-bottom: 8px; color: var(--color-text-primary);">Tips for Success
+                </h3>
+                <ul style="margin-left: 20px;">
+                    <li>Start with just one system and build momentum</li>
+                    <li>Make tasks specific and time-bound</li>
+                    <li>Track your streak to build consistency</li>
+                    <li>Review the 5 Principles regularly for inspiration</li>
+                    <li>Celebrate small wins - they compound!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+    <!-- Load JavaScript -->
+    <script src="app.js"></script>
+</body>
+
+</html>
